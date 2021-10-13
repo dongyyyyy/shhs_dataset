@@ -62,6 +62,9 @@ def ellip_filter_sos(signals,rp=6,rs=53, lowcut=None, highcut=None, fs = 200 , o
     filtered = signal.sosfilt(sos,signals)
     return filtered
 
+def data_preprocessing_numpy_mean_std(signals,signals_mean,signals_std):
+    return (signals-signals_mean) / signals_std
+    
 def read_annot_regex(filename):
     with open(filename, 'r') as f:
         content = f.read()
@@ -91,7 +94,7 @@ def read_annot_regex(filename):
         duration = float(durationline[10:-11])
         assert duration % 30 == 0.
         epochs_duration = int(duration) // 30
-
+        
         stages += [stage]*epochs_duration
         starts += [start]
         durations += [duration]
